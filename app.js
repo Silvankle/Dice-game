@@ -37,20 +37,50 @@ document.querySelector(".btn-roll").addEventListener("click", function () {
     document.getElementById("current-" + activePlayer).innerHTML = roundScore;
   } else {
     //1 buusan tul toglogchiin eeljiig ene hesegt solij ogno.
-
-    // Ene toglogchin tsugluulsan onoog 0 bolgono.
-    roundScore = 0;
-    document.getElementById("current-" + activePlayer).innerHTML = 0;
-
-    // Herev idevhitei toglogch ni 0 baival idevhitei toglogchiig 1 bolgo.
-    // ugui bol ievhitei toglogchiig 0 bolgo.
-    activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
-
-    //Улаан цэгийг шилжүүлэх
-    document.querySelector(".player-0-panel").classList.toggle("active");
-    document.querySelector(".player-1-panel").classList.toggle("active");
-
-    //Shoog tvr alga bolgoh
-    diceDom.style.display = "none";
+    switchToNextPlayer();
   }
 });
+
+// HOLD tovchnii event Listener
+document.querySelector(".btn-hold").addEventListener("click", function () {
+  //ug toglogchin tsugluulsan onoog global onoon deer nemj ogno.
+  //   if(activePlayer === 0 ){
+  //     scores[0] = scores[0] + roundScore;
+  //   }else{
+  //     scores[1] = scores[1] + roundScore;
+  //   }
+  scores[activePlayer] = scores[activePlayer] + roundScore;
+  //Delgets deer onoog ni oorcloh
+  document.getElementById("score-" + activePlayer).innerHTML =
+    scores[activePlayer];
+  //Ug toglogch hojison esehiig shalgah
+  if (scores[activePlayer] >= 20) {
+    document.getElementById("name-" + activePlayer).innerHTML = "WINNER!!";
+    document
+      .querySelector(".player-" + activePlayer + "-panel")
+      .classList.add("winner");
+    document
+      .querySelector(".player-" + activePlayer + "-panel")
+      .classList.remove("active");
+  } else {
+    //eeljiin onoog ni 0 bolgono.
+    switchToNextPlayer();
+  }
+});
+
+function switchToNextPlayer() {
+  roundScore = 0;
+  document.getElementById("current-" + activePlayer).innerHTML = 0;
+
+  activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+
+  //Улаан цэгийг шилжүүлэх
+  document.querySelector(".player-0-panel").classList.toggle("active");
+  document.querySelector(".player-1-panel").classList.toggle("active");
+
+  //Shoog tvr alga bolgoh
+  diceDom.style.display = "none";
+}
+
+//shien togloom ehlvvleh tovchnii listener
+dosumern;
